@@ -2,8 +2,10 @@
 
 echo "${KUBE_CONFIG_DATA}" | base64 -d > kubeconfig
 export KUBECONFIG=kubeconfig
-result="$(kubectl $1)"
-status=$? # get previous command output
-echo "result=${result}"
-echo "$result"
-if [[ $status -eq 0 ]]; then exit 0; else exit 1; fi
+for i in "$@"
+do
+  result="$(kubectl i)"
+  status=$?
+  if [[ $status -eq 0 ]]; then continue ; else exit 1; fi
+done
+exit 0  # successfully executed all the commands
