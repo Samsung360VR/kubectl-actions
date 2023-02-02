@@ -31,18 +31,24 @@ jobs:
 
 If multiple kubectl commands need to be executed ,use v2 as 
 
+```yml
+name: Push
+
 on:
-  push:
-name: Check args
+  - push
+      branches:
+      - master
 jobs:
   deploy:
-    name: Checking Args
     runs-on: ubuntu-latest
     steps:
-      - name: EKS Deploy
-        id: deploy-image
-        uses: Samsung360VR/kubectl-actions@v2             #{owner}/{repo}@sha
+      - name: Checkout
+        uses: actions/checkout@v2
+      - name: Create/Modify deployment
+        uses: Samsung360VR/kubectl-actions@v2
         env:
-          KUBE_CONFIG_DATA: ${{ secrets.UG_KUBE_CONFIG_DATA }}
+          KUBE_CONFIG_DATA: ${{ secrets.KUBE_CONFIG_DATA }}
         with:
           args: "['get pods -n gaming-dev' , 'get pods -n gaming-dev' , 'get pods -n gaming-dev']"
+  ```
+
