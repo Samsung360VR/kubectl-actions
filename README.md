@@ -27,3 +27,22 @@ jobs:
 
 ```
 > KUBE_CONFIG_DATA should be base64 encoded before saving in secrets
+
+
+If multiple kubectl commands need to be executed ,use v2 as 
+
+on:
+  push:
+name: Check args
+jobs:
+  deploy:
+    name: Checking Args
+    runs-on: ubuntu-latest
+    steps:
+      - name: EKS Deploy
+        id: deploy-image
+        uses: Samsung360VR/kubectl-actions@v2             #{owner}/{repo}@sha
+        env:
+          KUBE_CONFIG_DATA: ${{ secrets.UG_KUBE_CONFIG_DATA }}
+        with:
+          args: "['get pods -n gaming-dev' , 'get pods -n gaming-dev' , 'get pods -n gaming-dev']"
